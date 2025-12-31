@@ -299,6 +299,9 @@ def update_bar_chart(hover_data):
     fig.update_layout(margin={"r": 0, "t": 30, "l": 0, "b": 30})
     return fig
 
+
+PORT = int(os.environ.get("PORT", 8000))
+
 if __name__ == "__main__":
     dash_app.run(
         host="0.0.0.0",
