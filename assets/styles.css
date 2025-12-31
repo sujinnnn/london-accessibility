@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Antic+Didone&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap');
+
+body {
+  background: #0a0a0a;
+  color: #eaeaea;
+  font-family: "Merriweather", "Antic Didone", Arial, sans-serif;
+}
+
+/* ===== HERO ===== */
+.hero-section {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.hero-image {
+  width: 100%;
+  filter: brightness(0.45);
+}
+
+.hero-title {
+  position: absolute;
+  bottom: 18%;
+  right: 6%;
+  font-family: "Antic Didone", serif;
+  font-size: 44px;
+}
+
+/* ===== SECTIONS ===== */
+.section {
+  max-width: 900px;
+  margin: 0 auto 48px auto;
+  line-height: 1.7;
+}
+
+.section h2 {
+  color: #f0b400;
+  font-family: "Antic Didone", serif;
+}
+
+/* ===== HOW TO ===== */
+.howto-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+/* ===== VISUALIZATION ===== */
+.viz-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 18px;
+}
+
+#choropleth-map, #bar-chart {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+#choropleth-map {
+    border-radius: 12px;
+  }
+  
+.howto p {
+color: #d9d9d9;
+font-weight: 500;
+}
+
+.click {
+    color: #5da850;
+    font-weight: 600;
+    }
+
+.howto small {
+opacity: 0.8;
+}
+  

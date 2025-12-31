@@ -1,0 +1,13 @@
+dash
+Flask
+Flask_Cors
+geojson
+geopandas
+geopy
+networkx
+osmnx
+pandas
+plotly
+pyproj
+Requests
+Shapely
