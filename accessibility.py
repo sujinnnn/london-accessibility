@@ -7,21 +7,63 @@ from shapely.geometry import Point, Polygon
 import geopandas as gpd
 import json
 import pandas as pd
+import os
+import requests
 
+DATA_DIR = "./data"
+os.makedirs(DATA_DIR, exist_ok=True)
+
+HF_BASE = "https://huggingface.co/datasets/slee0215/london-accessibility-data/resolve/main"
+
+
+def download_if_missing(filename):
+    local_path = os.path.join(DATA_DIR, filename)
+
+    if os.path.exists(local_path):
+        print(f"✔ Using local file: {filename}")
+        return local_path
+
+    url = f"{HF_BASE}/{filename}"
+    print(f"⬇ Downloading from HuggingFace: {url}")
+
+    r = requests.get(url, stream=True)
+    r.raise_for_status()
+
+    with open(local_path, "wb") as f:
+        for chunk in r.iter_content(chunk_size=8192):
+            f.write(chunk)
+
+    print(f"✔ Downloaded and cached: {local_path}")
+    return local_path
+    
 # Data
-walking_graph = nx.read_graphml('./data/modified_london_walking_graph.graphml')
-subway_graph = nx.read_graphml('./data/london_rail_network.graphml')
-centroid_points = gpd.read_file("./data/neighborhood_centroid.geojson")
-poi_gdf = gpd.read_file("./data/projected_osm_pois_point.geojson")
+# ---- Graphs ----
+walking_graph = nx.read_graphml(
+    download_if_missing("modified_london_walking_graph.graphml")
+)
 
-with open("./data/london_neighborhood.geojson", "r") as json_file:
-    geojson_data = json.load(json_file)
+subway_graph = nx.read_graphml(
+    download_if_missing("london_rail_network.graphml")
+)
 
-with open("./data/subway_walk_node_mapper.json", "r") as json_file:
-    subway_walk_node_mapper = json.load(json_file)
+# ---- GeoDataFrames ----
+centroid_points = gpd.read_file(
+    download_if_missing("neighborhood_centroid.geojson")
+)
 
-with open("./data/centroid_station_travel_time.json", "r") as json_file:
-    centroid_station_travel_time = json.load(json_file)
+poi_gdf = gpd.read_file(
+    download_if_missing("projected_osm_pois_point.geojson")
+)
+
+# ---- JSON Files ----
+with open(download_if_missing("london_neighborhood.geojson"), "r") as f:
+    geojson_data = json.load(f)
+
+with open(download_if_missing("subway_walk_node_mapper.json"), "r") as f:
+    subway_walk_node_mapper = json.load(f)
+
+with open(download_if_missing("centroid_station_travel_time.json"), "r") as f:
+    centroid_station_travel_time = json.load(f)
 
 walk_subway_node_mapper = {value: key for key, value in subway_walk_node_mapper.items()}
 
