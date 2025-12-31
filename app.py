@@ -302,7 +302,7 @@ def update_bar_chart(hover_data):
 if __name__ == "__main__":
     dash_app.run(
         host="0.0.0.0",
-        port=8000,
+        port=PORT,
         debug=False
     )
 
